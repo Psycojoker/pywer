@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
+import re
+import json
 import argh
+
+from os import path
+from urllib2 import urlopen
 
 
 ALL_PACKAGES_URL = "https://bower-component-list.herokuapp.com/"
@@ -13,6 +18,11 @@ def package_to_uri(package):
 
     if "/" in package:
         return "https://github.com/" + package
+
+    if re.match("^[a-z0-9.-]+$", package):
+        return json.load(urlopen(path.join(BASE_PACKAGE_URL, package)))["url"]
+
+    raise Exception("Unhandle package query:" % package)
 
 
 # commands

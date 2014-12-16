@@ -15,3 +15,7 @@ def test_package_to_uri_http():
 
 def test_package_to_uri_github_shortcut():
     assert package_to_uri("pouet/plop") == "https://github.com/pouet/plop"
+
+
+def test_package_to_uri_package_name():
+    assert package_to_uri("jquery") == "git://github.com/jquery/jquery.git"
