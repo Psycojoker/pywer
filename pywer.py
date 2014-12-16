@@ -8,7 +8,11 @@ BASE_PACKAGE_URL = "https://bower.herokuapp.com/packages"
 
 
 def package_to_uri(package):
-    return package
+    if package.startswith(("https://", "http://", "git://")):
+        return package
+
+    if "/" in package:
+        return "https://github.com/" + package
 
 
 # commands
