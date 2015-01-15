@@ -12,6 +12,13 @@ ALL_PACKAGES_URL = "https://bower-component-list.herokuapp.com/"
 BASE_PACKAGE_URL = "https://bower.herokuapp.com/packages"
 
 
+class GithubRepos(object):
+    def __init__(self, uri):
+        self.uri = uri
+        self.author = uri[len("git://github.com/"):].split("/")[0]
+        self.name = uri[len("git://github.com/"):].split("/")[1].split(".")[0]
+
+
 def package_to_uri(package):
     if package.startswith(("https://", "http://", "git://")):
         return package
@@ -49,8 +56,8 @@ def init():
     pass
 
 
-def install():
-    pass
+def install(*packages):
+    print dict(zip(packages, map(GithubRepos, map(package_to_uri, packages))))
 
 
 def link():
