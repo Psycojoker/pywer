@@ -17,7 +17,10 @@ def package_to_uri(package):
         return package
 
     if "/" in package:
-        return "https://github.com/" + package
+        if package.endswith(".git"):
+            return "git://github.com/" + package
+        else:
+            return "git://github.com/" + package + ".git"
 
     if re.match("^[a-z0-9.-]+$", package):
         return json.load(urlopen(path.join(BASE_PACKAGE_URL, package)))["url"]
