@@ -20,6 +20,9 @@ class GithubRepos(object):
         self.name = uri[len("git://github.com/"):].split("/")[1].split(".")[0]
         self.versions = sorted(map(lambda x: x["name"], json.load(urlopen("https://api.github.com/repos/%s/%s/tags" % (self.author, self.name)))), key=parse_version)
 
+    def get_version_number_to_install(self):
+        return filter(lambda x: "-rc" not in x and "beta" not in x, self.versions)[-1]
+
 
 def package_to_uri(package):
     if package.startswith(("https://", "http://", "git://")):
