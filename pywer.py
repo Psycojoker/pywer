@@ -17,6 +17,7 @@ class GithubRepos(object):
         self.uri = uri
         self.author = uri[len("git://github.com/"):].split("/")[0]
         self.name = uri[len("git://github.com/"):].split("/")[1].split(".")[0]
+        self.versions = map(lambda x: x["name"], json.load(urlopen("https://api.github.com/repos/%s/%s/tags" % (self.author, self.name))))
 
 
 def package_to_uri(package):
